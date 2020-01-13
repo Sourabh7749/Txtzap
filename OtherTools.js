@@ -253,27 +253,27 @@ const OtherTools = props => {
                                   </label>
                                 </div>
                               ))}
-                              <div class="form-check">
-                                <label class="left">
+                              <div className="form-check">
+                                <label className="left">
                                   <input
                                     type="checkbox"
                                     name="check"
                                     checked={contentother.otherclicked === 1}
                                     onChange={otherclicked}
                                   />{" "}
-                                  <span class="label-text">OTHER</span>
+                                  <span className="label-text">OTHER</span>
                                 </label>
-                                <div class="inline-form">
+                                <div className="inline-form">
                                   <input
                                     type="text"
                                     id="othercontent"
-                                    class="form-control"
+                                    className="form-control"
                                     onChange={handleChangeother}
                                     value={contentother.othercontent}
                                     disabled={contentother.otherclicked === 0}
                                   />{" "}
                                   <button
-                                    class="btn save-btn"
+                                    className="btn save-btn"
                                     disabled={contentother.otherclicked === 0}
                                     onClick={() => AddTool()}
                                   >
