@@ -11,7 +11,6 @@ const OtherTools = props => {
   const [data, setData] = useState([]);
   const [titles, settitle] = useState([]);
   const [content, setContent] = useState({
-
   });
   const [contentother, setContentother] = useState({
     otherclicked: 0,
@@ -20,7 +19,8 @@ const OtherTools = props => {
   const [showLoading, setShowLoading] = useState(true);
   const apiUrl =
     API_ENDPOINT + "othertoolslist/" + localStorage.getItem("user_id");
-
+  
+  //To get All tools from Db
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(apiUrl, {
@@ -33,15 +33,18 @@ const OtherTools = props => {
     };
 
     fetchData();
+    //Remove Classes of Front end
     document.body.classList.remove("tp-fp", "blue_bg", "review_bg");
   }, []);
 
   useEffect(() => {
+    //Set Updated data by removing Inactive 
     const result = data.filter(d => d.status !== 0);
     settitle(result);
   }, [data]);
 
   useEffect(() => {
+    //Set Default Fields on Load 
     for (let i = 0; i < titles.length; i++) {
       var ids = titles[0].id;
       var name = titles[0].name;
@@ -51,6 +54,7 @@ const OtherTools = props => {
   }, [titles]);
 
   const checkboxfunction = event => {
+     //Set Checkbox Value 0 or 1
     let id = event.target.id;
     let status = "";
     if (event.target.checked === false) {
@@ -58,7 +62,7 @@ const OtherTools = props => {
     } else {
       status = 1;
     }
-
+    
     var postData = {
       user_id: localStorage.getItem("user_id"),
       id: id,
@@ -72,7 +76,7 @@ const OtherTools = props => {
       }
     };
     const apiadd = API_ENDPOINT + "othertools_checkbox";
-
+   //Update Status in Db
     axios
       .post(apiadd, postData, axiosConfig)
       .then(res => {
@@ -97,13 +101,15 @@ const OtherTools = props => {
     });
   };
   const handleChange = event => {
+    //Update State for Content
     setContent({ ...content, [event.target.id]: event.target.value });
   };
 
   const handleChangeother = event => {
+    //Update State for Other Content 
     setContentother({ ...contentother, [event.target.id]: event.target.value });
   };
-
+  //To Add New Tool Data
   const AddTool = async () => {
     var postData = {
       user_id: localStorage.getItem("user_id"),
@@ -130,6 +136,8 @@ const OtherTools = props => {
         console.log("AXIOS ERROR: ", err);
       });
   };
+  
+   //To Update Data in Db
   const SubmitForm = async () => {
     var postData = content;
     let axiosConfig = {
@@ -153,13 +161,14 @@ const OtherTools = props => {
         console.log("AXIOS ERROR: ", err);
       });
   };
-
+  // To Previous File
   const back = () => {
     props.history.push({
       pathname: "/"
     });
   };
 
+  // Update on Click Data for Checkbox
   const otherclicked = event => {
     if (event.target.checked === true) {
       setContentother({ ...contentother, ["otherclicked"]: 1 });
